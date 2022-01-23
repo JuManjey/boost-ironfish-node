@@ -1,0 +1,7 @@
+ironfish config:show
+ironfish config:set nodeWorkersMax 64
+ironfish config:set maxPeers 200
+ironfish config:set minPeers 5
+ironfish config:set targetPeers 100
+ironfish config:set blocksPerMessage 100
+ironfish config:show
