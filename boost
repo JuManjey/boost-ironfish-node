@@ -1,7 +1,21 @@
-ironfish config:show
+. $HOME/.bashrc
+. $HOME/.bash_profile
+mkdir -p ~/ironfish_keys
+ironfish accounts:export $IRONFISH_WALLET ~/ironfish_keys/$IRONFISH_WALLET.json
+cat  ~/ironfish_keys/$IRONFISH_WALLET.json
+systemctl stop ironfishd ironfishd-miner
+ironfish reset
+ironfish accounts:import ~/ironfish_keys/$IRONFISH_WALLET.json
+systemctl restart ironfishd ironfishd-miner
 ironfish config:set nodeWorkersMax 64
-ironfish config:set maxPeers 200
-ironfish config:set minPeers 5
-ironfish config:set targetPeers 100
-ironfish config:set blocksPerMessage 100
-ironfish config:show
+ironfish config:set minerBatchSize 20000
+ironfish config:set blocksPerMessage 40
+ironfish config:set maxPeers 50
+ironfish config:set targetPeers 50
+systemctl restart ironfishd ironfishd-miner
+journalctl -u ironfishd-miner -f
+ironfish status -f
+# AMD EPYC 32-Core:
+# heshrate +30% (124.35 MH/s)
+# avg - 30ms
+# IDLE - 0.03-0.05
